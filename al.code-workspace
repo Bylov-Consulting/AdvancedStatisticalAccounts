@@ -7,5 +7,7 @@
       "path": ".AL-Go"
     }
   ],
-  "settings": {}
+  "settings": {
+    "powershell.cwd": "c:\\Work\\AL\\AdvancedStatisticalAccounts\\AdvancedStatisticalAccount"
+  }
 }
