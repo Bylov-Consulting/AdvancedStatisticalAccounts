@@ -15,6 +15,17 @@ tableextension 50002 StatisticalAccJournalLineBYL extends "Statistical Acc. Jour
             TableRelation = "G/L Register"."No.";
         }
 
-    }
+        field(50002; "Source Type"; Enum StatisticalAccountSourceType)
+        {
+            Caption = 'Source Type';
+            DataClassification = ToBeClassified;
+        }
+        field(50003; "Unit of Measure"; Code[10])
+        {
+            Caption = 'Unit of Measure';
+            DataClassification = ToBeClassified;
+            TableRelation = "Unit of Measure".Code;
+        }
 
+    }
 }

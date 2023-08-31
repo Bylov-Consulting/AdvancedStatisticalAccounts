@@ -1,4 +1,4 @@
-tableextension 50001 GenJournalLineBYL extends "Gen. Journal Line"
+tableextension 50003 PurchaseLineBYL extends "Purchase Line"
 {
     fields
     {
@@ -12,12 +12,14 @@ tableextension 50001 GenJournalLineBYL extends "Gen. Journal Line"
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
         }
-        field(50002; "Unit of Measure"; Code[10])
-        {
-            Caption = 'Unit of Measure';
-            DataClassification = ToBeClassified;
-            TableRelation = "Unit of Measure".Code;
-        }
 
+        modify("Type")
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec."Statistical Account No." := '';
+                Rec."Statistical Amount" := 0;
+            end;
+        }
     }
 }

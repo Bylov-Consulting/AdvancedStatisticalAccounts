@@ -8,5 +8,10 @@ tableextension 50000 StatisticalLedgerEntryBYL extends "Statistical Ledger Entry
             DataClassification = ToBeClassified;
             TableRelation = "G/L Entry"."Entry No.";
         }
+        field(50001; "Source Type"; Enum StatisticalAccountSourceType)
+        {
+            Caption = 'Source Type';
+            DataClassification = ToBeClassified;
+        }
     }
 }

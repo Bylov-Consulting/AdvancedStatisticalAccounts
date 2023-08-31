@@ -51,6 +51,7 @@ codeunit 50000 "Statistical Acc. G/L Mgmt. BYL"
         StatAccJournalLine."Dimension Set ID" := GenJnlLine."Dimension Set ID";
         StatAccJournalLine."G/L Entry No." := GLEntry."Entry No.";
         StatAccJournalLine."G/L Register No." := GLRegNo."No.";
+        StatAccJournalLine."Source Type" := StatAccJournalLine."Source Type"::"G/L";
         // Insert Line
         StatAccJournalLine.Insert();
     end;
@@ -63,28 +64,6 @@ codeunit 50000 "Statistical Acc. G/L Mgmt. BYL"
     begin
         if PreviewMode then
             exit;
-
-        /*LineNo := 0;
-        if GenJournalLine.FindFirst() then begin
-            repeat
-                LineNo := LineNo + 10000;
-                // Init line
-                StatAccJournalLine.init();
-                StatAccJournalLine."Journal Batch Name" := 'DEFAULT'; // TODO Fix this to be dynamic
-                StatAccJournalLine."Line No." := LineNo;
-                StatAccJournalLine."Posting Date" := GenJournalLine."Posting Date";
-                StatAccJournalLine."Statistical Account No." := GenJournalLine."Statistical Account No.";
-                StatAccJournalLine.Description := GenJournalLine.Description;
-                StatAccJournalLine.Amount := GenJournalLine."Statistical Amount";
-                StatAccJournalLine."Shortcut Dimension 1 Code" := GenJournalLine."Shortcut Dimension 1 Code";
-                StatAccJournalLine."Shortcut Dimension 2 Code" := GenJournalLine."Shortcut Dimension 2 Code";
-                StatAccJournalLine."Dimension Set ID" := GenJournalLine."Dimension Set ID";
-                //StatAccJournalLine."G/L Entry No." := GLEntry."Entry  No."; TODO Fix Entry No.
-                // Insert Line
-                StatAccJournalLine.Insert();
-            // Post Statistical Ledger Entry
-            until GenJournalLine.Next() = 0;
-            */
         StatAccJournalLine.SetRange("G/L Register No.", GLRegNo);
         if StatAccJournalLine.FindFirst() then
             StatAccPostBatch.Run(StatAccJournalLine);
