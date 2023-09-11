@@ -1,4 +1,4 @@
-pageextension 50003 PurchaseOrderSubformBYL extends "Purchase Order Subform"
+pageextension 50005 PurchCrMemoSubformBYL extends "Purch. Cr. Memo Subform"
 {
     layout
     {

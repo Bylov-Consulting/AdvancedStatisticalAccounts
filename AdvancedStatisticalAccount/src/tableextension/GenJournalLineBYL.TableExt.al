@@ -12,7 +12,7 @@ tableextension 50001 GenJournalLineBYL extends "Gen. Journal Line"
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
         }
-        field(50002; "Unit of Measure"; Code[10])
+        field(50002; "Stat. Acc. Unit of Measure"; Code[10])
         {
             Caption = 'Unit of Measure';
             DataClassification = ToBeClassified;

@@ -20,7 +20,7 @@ tableextension 50002 StatisticalAccJournalLineBYL extends "Statistical Acc. Jour
             Caption = 'Source Type';
             DataClassification = ToBeClassified;
         }
-        field(50003; "Unit of Measure"; Code[10])
+        field(50003; "Stat. Acc. Unit of Measure"; Code[10])
         {
             Caption = 'Unit of Measure';
             DataClassification = ToBeClassified;

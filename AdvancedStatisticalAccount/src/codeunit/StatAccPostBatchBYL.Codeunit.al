@@ -33,14 +33,14 @@ codeunit 50998 "Stat. Acc. Post. Batch BYL"
     local procedure VerifyLines(var StatisticalAccJournalLine: Record "Statistical Acc. Journal Line")
     var
         BackupStatisticalAccJournalLine: Record "Statistical Acc. Journal Line";
-        StatAccJnlCheckLine: Codeunit "Stat. Acc. Jnl Check Line";
+        StatAccJnlCheckLineBYL: Codeunit "Stat. Acc. Jnl Check Line BYL";
     begin
         BackupStatisticalAccJournalLine.Copy(StatisticalAccJournalLine);
         if not StatisticalAccJournalLine.FindSet() then
             exit;
 
         repeat
-            StatAccJnlCheckLine.RunCheck(StatisticalAccJournalLine);
+            StatAccJnlCheckLineBYL.RunCheck(StatisticalAccJournalLine);
         until StatisticalAccJournalLine.Next() = 0;
         StatisticalAccJournalLine.Copy(BackupStatisticalAccJournalLine);
     end;
@@ -49,7 +49,7 @@ codeunit 50998 "Stat. Acc. Post. Batch BYL"
     var
         BackupStatisticalAccJournalLine: Record "Statistical Acc. Journal Line";
         LastStatisticalLedgerEntry: Record "Statistical Ledger Entry";
-        StatAccJnlLinePost: Codeunit "Stat. Acc. Jnl. Line Post";
+        StatAccJnlLinePostBYL: Codeunit "Stat. Acc. Jnl. Line Post BYL";
     begin
         BackupStatisticalAccJournalLine.Copy(StatisticalAccJournalLine);
         LastStatisticalLedgerEntry.LockTable();
@@ -57,7 +57,7 @@ codeunit 50998 "Stat. Acc. Post. Batch BYL"
 
         if StatisticalAccJournalLine.FindSet() then begin
             repeat
-                StatAccJnlLinePost.PostLine(StatisticalAccJournalLine, NextEntryNo, NextTransactionNo);
+                StatAccJnlLinePostBYL.PostLine(StatisticalAccJournalLine, NextEntryNo, NextTransactionNo);
             until StatisticalAccJournalLine.Next() = 0;
             Commit();
         end;

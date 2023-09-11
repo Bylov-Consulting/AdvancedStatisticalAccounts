@@ -6,23 +6,26 @@ codeunit 50000 "Statistical Acc. G/L Mgmt. BYL"
         TempStatAccJournalLine: Record "Statistical Acc. Journal Line" temporary;
         StatAccJnlCheckLine: Codeunit "Stat. Acc. Jnl Check Line";
     begin
-        TempStatAccJournalLine.Init();
-        TempStatAccJournalLine."Statistical Account No." := GenJournalLine."Statistical Account No.";
-        TempStatAccJournalLine.Amount := GenJournalLine."Statistical Amount";
-        StatAccJnlCheckLine.Run(TempStatAccJournalLine);
+        if (GenJournalLine."Account Type" <> GenJournalLine."Account Type"::"G/L Account") and (GenJournalLine."Statistical Account No." <> '') then begin
+            TempStatAccJournalLine.Init();
+            TempStatAccJournalLine."Statistical Account No." := GenJournalLine."Statistical Account No.";
+            TempStatAccJournalLine.Amount := GenJournalLine."Statistical Amount";
+            StatAccJnlCheckLine.Run(TempStatAccJournalLine);
+        end
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Stat. Acc. Jnl. Line Post BYL", OnAfterTransferStatisticalAccJournalLineTo, '', false, false)]
     local procedure OnAfterTransferStatisticalAccJournalLineTo(var StatisticalLedgerEntry: Record "Statistical Ledger Entry"; var StatisticalAccJournalLine: Record "Statistical Acc. Journal Line")
     begin
         StatisticalLedgerEntry."G/L Entry No." := StatisticalAccJournalLine."G/L Entry No.";
+        StatisticalLedgerEntry."Source Type" := StatisticalAccJournalLine."Source Type";
+        StatisticalLedgerEntry."Stat. Acc. Unit of Measure" := StatisticalAccJournalLine."Stat. Acc. Unit of Measure";
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnAfterPostGLAcc, '', false, false)]
     local procedure OnAfterGLFinishPostingPostStatisticalLedgerEntry(GLEntry: Record "G/L Entry"; var GenJnlLine: Record "Gen. Journal Line"; Balancing: Boolean; sender: Codeunit "Gen. Jnl.-Post Line")
     var
         StatAccJournalLine: Record "Statistical Acc. Journal Line";
-        //StatAccJnlLinePost: Codeunit "Stat. Acc. Jnl. Line Post BYL";
         GLRegNo: Record "G/L Register";
         LastLineNo: integer;
 
@@ -57,15 +60,15 @@ codeunit 50000 "Statistical Acc. G/L Mgmt. BYL"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnProcessLinesOnAfterPostGenJnlLines, '', false, false)]
-    local procedure OnProcessLinesOnAfterPostGenJnlLinesPostStatisticalAccountEntries(GLRegister: Record "G/L Register"; var GenJournalLine: Record "Gen. Journal Line"; PreviewMode: Boolean; var GLRegNo: Integer)
+    local procedure OnProcessLinesOnAfterPostGenJnlLinesPostStatisticalAccountEntries(GLRegister: Record "G/L Register"; PreviewMode: Boolean; var GLRegNo: Integer)
     var
         StatAccJournalLine: Record "Statistical Acc. Journal Line";
-        StatAccPostBatch: Codeunit "Stat. Acc. Post. Batch";
+        StatAccPostBatchBYL: Codeunit "Stat. Acc. Post. Batch BYL";
     begin
         if PreviewMode then
             exit;
         StatAccJournalLine.SetRange("G/L Register No.", GLRegNo);
         if StatAccJournalLine.FindFirst() then
-            StatAccPostBatch.Run(StatAccJournalLine);
+            StatAccPostBatchBYL.Run(StatAccJournalLine);
     end;
 }

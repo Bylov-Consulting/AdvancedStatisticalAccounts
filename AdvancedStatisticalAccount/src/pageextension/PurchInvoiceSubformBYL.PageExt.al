@@ -1,8 +1,8 @@
-pageextension 50003 PurchaseOrderSubformBYL extends "Purchase Order Subform"
+pageextension 50004 PurchInvoiceSubformBYL extends "Purch. Invoice Subform"
 {
     layout
     {
-        addlast(Control1)
+        addlast(PurchDetailLine)
         {
             field("Statistical Account No."; Rec."Statistical Account No.")
             {

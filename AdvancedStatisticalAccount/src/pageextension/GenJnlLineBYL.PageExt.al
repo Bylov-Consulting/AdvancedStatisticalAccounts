@@ -16,6 +16,11 @@ pageextension 50000 GenJnlLineBYL extends "General Journal"
                 ToolTip = 'Specify the Statistical Amount';
             }
 
+            field("Stat. Acc. Unit of Measure"; Rec."Stat. Acc. Unit of Measure")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the Unit of Measure for the entry';
+            }
         }
 
     }

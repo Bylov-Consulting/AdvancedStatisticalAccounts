@@ -13,5 +13,11 @@ tableextension 50000 StatisticalLedgerEntryBYL extends "Statistical Ledger Entry
             Caption = 'Source Type';
             DataClassification = ToBeClassified;
         }
+        field(50002; "Stat. Acc. Unit of Measure"; Code[10])
+        {
+            Caption = 'Unit of Measure';
+            DataClassification = ToBeClassified;
+            TableRelation = "Unit of Measure".Code;
+        }
     }
 }

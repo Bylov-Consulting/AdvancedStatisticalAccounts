@@ -1,4 +1,4 @@
-tableextension 50003 PurchaseLineBYL extends "Purchase Line"
+tableextension 50004 PurchInvLineBYL extends "Purch. Inv. Line"
 {
     fields
     {
@@ -18,17 +18,6 @@ tableextension 50003 PurchaseLineBYL extends "Purchase Line"
             DataClassification = ToBeClassified;
             TableRelation = "Unit of Measure".Code;
         }
-
-        modify("Type")
-        {
-            trigger OnAfterValidate()
-            begin
-                if rec.Type <> rec.Type::"G/L Account" then begin
-                    Rec."Statistical Account No." := '';
-                    Rec."Statistical Amount" := 0;
-                    Rec."Stat. Acc. Unit of Measure" := '';
-                end;
-            end;
-        }
     }
+
 }
